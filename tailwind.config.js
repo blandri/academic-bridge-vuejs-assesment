@@ -31,6 +31,9 @@ export default {
           letterSpacing: '-0.02em',
           fontWeight: '700',
         }],
+      },
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
       }
     },
   },
