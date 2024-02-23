@@ -1,7 +1,7 @@
 <template>
   <div
     id="card"
-    :class="{ 'bg-white dark:bg-side-dark rounded-[30px] p-5 grid cursor-pointer': true, }"
+    :class="{ 'bg-white dark:bg-side-dark rounded-[30px] p-5 grid cursor-pointer': true, 'border-2': props.dragging === id }"
     draggable="true"
   >
     <div class="h-fit">
@@ -12,7 +12,7 @@
       <div class="flex justify-between items-center font-bold dark:text-white">
         <slot name="title"></slot>
         <div class="text-second-text dark:text-inherit relative">
-          <div @click="() => onOpenMoreClick(index)"><MoreIcon /></div>
+          <div id="more-icon" @click="() => onOpenMoreClick(index)"><MoreIcon /></div>
           <div
             :class="{
               'bg-white dark:bg-side-dark absolute z-10 border dark:border-title-text-dark p-1 font-normal text-sm text-black-hue dark:text-white rounded-lg right-2 top-[120%] ease-in-out': true,
@@ -125,6 +125,9 @@ const props = defineProps({
   id: {
     type: Number,
     required: true
+  },
+  dragging: {
+    type: Number
   }
-});
+}); console.log(props.dragging)
 </script>

@@ -30,12 +30,14 @@
         <input
           type="text"
           name="title"
+          id="title-e"
           v-model="formData.title"
           placeholder="Title"
           class="bg-transparent border-b-[1.9px] dark:border-green-400 dark:focus:border-green-400 focus:border-page-blue focus:outline-none"
         />
         <textarea
           name="details"
+          id="details-e"
           v-model="formData.details"
           placeholder="Details"
           rows="2"

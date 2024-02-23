@@ -55,7 +55,7 @@ import LogoPicture from '../assets/logo.jpg'
       </div>
       <div class="w-full pt-10">
         <div class="flex justify-between items-center">
-          <h1 v-t="'board'" class="text-3xl dark:text-title-text-dark"></h1>
+          <h1 class="text-3xl dark:text-title-text-dark">Board</h1>
           <div class="flex items-center gap-3">
             <DropDownItem :language="true" />
             <div

@@ -15,7 +15,7 @@ import { useTodoListStore } from '@/stores/todoList'
           </template>
           <template #name>To do</template>
         </StatusItem>
-        <TodoCardItem v-for="(item, index) in todoTodos" :key="index" :id="item.id" @dragstart="onDrag($event, item.id)" @dragend="onDragEnd()">
+        <TodoCardItem v-for="(item, index) in todoTodos" :key="index" :id="item.id" :dragging="isDragging" @dragstart="onDrag($event, item.id)" @dragend="onDragEnd()">
           <template v-if="item.image" #image>
             <img alt="Profile picture" class="w-full h-32 mb-3 rounded-xl" :src="item.image" />
           </template>
@@ -37,7 +37,7 @@ import { useTodoListStore } from '@/stores/todoList'
           </template>
           <template #name>Doing</template>
         </StatusItem>
-        <TodoCardItem v-for="(item, index) in doingTodos" :key="index" :id="item.id" @dragstart="onDrag($event, item.id)">
+        <TodoCardItem v-for="(item, index) in doingTodos" :key="index" :id="item.id" @dragstart="onDrag($event, item.id)" @dragend="onDragEnd()">
           <template v-if="item.image" #image>
             <img alt="Profile picture" class="w-full h-32 mb-3 rounded-xl" :src="item.image" />
           </template>
@@ -59,7 +59,7 @@ import { useTodoListStore } from '@/stores/todoList'
           </template>
           <template #name>Under review</template>
         </StatusItem>
-        <TodoCardItem v-for="(item, index) in underReviewTodos" :key="index" :id="item.id" @dragstart="onDrag($event, item.id)">
+        <TodoCardItem v-for="(item, index) in underReviewTodos" :key="index" :id="item.id" @dragstart="onDrag($event, item.id)" @dragend="onDragEnd()">
           <template v-if="item.image" #image>
             <img alt="Profile picture" class="w-full h-32 mb-3 rounded-xl" :src="item.image" />
           </template>
@@ -81,7 +81,7 @@ import { useTodoListStore } from '@/stores/todoList'
           </template>
           <template #name>Done</template>
         </StatusItem>
-        <TodoCardItem v-for="(item, index) in doneTodos" :key="index" :id="item.id" @dragstart="onDrag($event, item.id)">
+        <TodoCardItem v-for="(item, index) in doneTodos" :key="index" :id="item.id" @dragstart="onDrag($event, item.id)" @dragend="onDragEnd()">
           <template v-if="item.image" #image>
             <img alt="Profile picture" class="w-full h-32 mb-3 rounded-xl" :src="item.image" />
           </template>
@@ -142,6 +142,7 @@ import { useTodoListStore } from '@/stores/todoList'
         <input
           type="text"
           name="title"
+          id="title"
           v-model="formData.title"
           placeholder="Title"
           class="bg-transparent border-b-[1.9px] dark:border-green-400 dark:focus:border-green-400 focus:border-page-blue focus:outline-none"
@@ -150,6 +151,7 @@ import { useTodoListStore } from '@/stores/todoList'
           name="details"
           v-model="formData.details"
           placeholder="Details"
+          id="details"
           rows="2"
           class="bg-transparent border-b-[1.9px] dark:border-green-400 dark:focus:border-green-400 resize-none focus:border-page-blue focus:outline-none"
         ></textarea>
@@ -198,7 +200,7 @@ const todoTodos = useTodoListStore().getTodos('todo')
 const underReviewTodos = useTodoListStore().getTodos('underReview')
 const doingTodos = useTodoListStore().getTodos('doing')
 const showPopOver = ref(false)
-const isDragging = ref(false)
+const isDragging = ref(-1)
 
 const formData = ref({
   title: '',
@@ -229,15 +231,15 @@ const onSubmit = () => {
 let idd = ''
 const onDrop = (event, status) => {
   useTodoListStore().updateTodo(idd, null, null, null, null, status)
-  isDragging.value = true
+  isDragging.value = 0
 }
 
 const onDrag = (event, id) => {
-   isDragging.value = true
+   isDragging.value = id
    idd = id
 }
 
 const onDragEnd = () => {
-  isDragging.value = false
+  isDragging.value = 0
 }
 </script>
