@@ -1,11 +1,16 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
+  darkMode: 'selector',
   content: [],
   theme: {
     extend: {
       colors: {
         'back-color': 'rgb(238, 241, 246)',
+        'back-color-dark': '#131415',
+        'side-dark': '#1f2124',
+        'title-text-dark': '#2e3135',
+        'normal-text-dark': '#9c9d9d',
         white: '#fff',
         'black-hue': 'rgb(13, 12, 34)',
         'page-blue': 'rgb(3, 86, 159)',

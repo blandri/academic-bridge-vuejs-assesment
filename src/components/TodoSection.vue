@@ -7,94 +7,94 @@ import { useTodoListStore } from '@/stores/todoList'
 
 <template>
   <div class="mt-8 h-[80%] overflow-auto pr-2">
-    <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-      <div class="flex flex-col gap-4">
+    <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 h-full">
+      <div @dragover.prevent @dragenter.prevent @drop="onDrop($event, 'todo')" class="flex flex-col gap-4 h-full">
         <StatusItem tagName="todo">
           <template #color>
             <div class="bg-todo rounded-[5px] w-[14px] h-[14px]" />
           </template>
           <template #name>To do</template>
         </StatusItem>
-          <TodoCardItem v-for="(item, index) in todoTodos" :key="index" :id="item.id">
-            <template v-if="item.image" #image>
-              <img alt="Profile picture" class="w-full h-32 mb-3 rounded-xl" :src="item.image" />
-            </template>
-            <template #title>
-              <p>{{ item.title }}</p>
-            </template>
-            <template #details>
-              <p>{{ item.details }}</p>
-            </template>
-            <template #date>
-              <p>{{ item.date }}</p>
-            </template>
-          </TodoCardItem>
+        <TodoCardItem v-for="(item, index) in todoTodos" :key="index" :id="item.id" @dragstart="onDrag($event, item.id)" @dragend="onDragEnd()">
+          <template v-if="item.image" #image>
+            <img alt="Profile picture" class="w-full h-32 mb-3 rounded-xl" :src="item.image" />
+          </template>
+          <template #title>
+            <p>{{ item.title }}</p>
+          </template>
+          <template #details>
+            <p>{{ item.details }}</p>
+          </template>
+          <template #date>
+            <p>{{ item.date }}</p>
+          </template>
+        </TodoCardItem>
       </div>
-      <div class="hidden sm:flex flex-col gap-4">
+      <div @dragover.prevent @dragenter.prevent @drop="onDrop($event, 'doing')" class="hidden sm:flex flex-col gap-4">
         <StatusItem tagName="doing">
           <template #color>
             <div class="bg-doing rounded-[5px] w-[14px] h-[14px]" />
           </template>
           <template #name>Doing</template>
         </StatusItem>
-          <TodoCardItem v-for="(item, index) in doingTodos" :key="index" :id="item.id">
-            <template #image>
-              <img alt="Profile picture" class="w-full h-32 mb-3 rounded-xl" :src="item.image" />
-            </template>
-            <template #title>
-              <p>{{ item.title }}</p>
-            </template>
-            <template #details>
-              <p>{{ item.details }}</p>
-            </template>
-            <template #date>
-              <p>{{ item.date }}</p>
-            </template>
-          </TodoCardItem>
+        <TodoCardItem v-for="(item, index) in doingTodos" :key="index" :id="item.id" @dragstart="onDrag($event, item.id)">
+          <template v-if="item.image" #image>
+            <img alt="Profile picture" class="w-full h-32 mb-3 rounded-xl" :src="item.image" />
+          </template>
+          <template #title>
+            <p>{{ item.title }}</p>
+          </template>
+          <template #details>
+            <p>{{ item.details }}</p>
+          </template>
+          <template #date>
+            <p>{{ item.date }}</p>
+          </template>
+        </TodoCardItem>
       </div>
-      <div class="hidden md:flex flex-col gap-4">
+      <div @dragover.prevent @dragenter.prevent @drop="onDrop($event, 'underReview')" class="hidden md:flex flex-col gap-4">
         <StatusItem tagName="underReview">
           <template #color>
             <div class="bg-under-review rounded-[5px] w-[14px] h-[14px]" />
           </template>
           <template #name>Under review</template>
         </StatusItem>
-          <TodoCardItem v-for="(item, index) in underReviewTodos" :key="index" :id="item.id">
-            <template #image>
-              <img alt="Profile picture" class="w-full h-32 mb-3 rounded-xl" :src="item.image" />
-            </template>
-            <template #title>
-              <p>{{ item.title }}</p>
-            </template>
-            <template #details>
-              <p>{{ item.details }}</p>
-            </template>
-            <template #date>
-              <p>{{ item.date }}</p>
-            </template>
-          </TodoCardItem>
+        <TodoCardItem v-for="(item, index) in underReviewTodos" :key="index" :id="item.id" @dragstart="onDrag($event, item.id)">
+          <template v-if="item.image" #image>
+            <img alt="Profile picture" class="w-full h-32 mb-3 rounded-xl" :src="item.image" />
+          </template>
+          <template #title>
+            <p>{{ item.title }}</p>
+          </template>
+          <template #details>
+            <p>{{ item.details }}</p>
+          </template>
+          <template #date>
+            <p>{{ item.date }}</p>
+          </template>
+        </TodoCardItem>
       </div>
-      <div class="hidden lg:flex flex-col gap-4">
+      <div @dragover.prevent @dragenter.prevent @drop="onDrop($event, 'done')" class="hidden lg:flex flex-col gap-4">
         <StatusItem tagName="done">
           <template #color>
             <div class="bg-done rounded-[5px] w-[14px] h-[14px]" />
           </template>
           <template #name>Done</template>
         </StatusItem>
-          <TodoCardItem v-for="(item, index) in doneTodos" :key="index" :id="item.id">
-            <template #image>
-              <img alt="Profile picture" class="w-full h-32 mb-3 rounded-xl" :src="item.image" />
-            </template>
-            <template #title>
-              <p>{{ item.title }}</p>
-            </template>
-            <template #details>
-              <p>{{ item.details }}</p>
-            </template>
-            <template #date>
-              <p>{{ item.date }}</p>
-            </template>
-          </TodoCardItem>
+        <TodoCardItem v-for="(item, index) in doneTodos" :key="index" :id="item.id" @dragstart="onDrag($event, item.id)">
+          <template v-if="item.image" #image>
+            <img alt="Profile picture" class="w-full h-32 mb-3 rounded-xl" :src="item.image" />
+          </template>
+          <template #title>
+            <p>{{ item.title }}</p>
+          </template>
+          <template #details>
+            <p>{{ item.details }}</p>
+          </template>
+          <template #date>
+            <p>{{ item.date }}</p>
+          </template>
+        </TodoCardItem>
       </div>
     </div>
   </div>
@@ -107,17 +107,18 @@ import { useTodoListStore } from '@/stores/todoList'
   >
     <div
       :class="{
-        'bg-white rounded-[30px] p-8 w-[22%]': true,
+        'bg-white dark:bg-[rgba(13,12,34,.93)] rounded-[30px] p-8 w-[25%]': true,
         'ease-in-out duration-500': true,
         'scale-0': !showPopOver,
         'scale-1': showPopOver
       }"
     >
-      <div class="flex items-center text-center">
+      <div class="flex items-center text-center dark:text-white">
         <h1 class="font-bold text-lg w-full">
           Add a new todo card to
           <span
             :class="{
+              'ml-1': true,
               'text-todo': formData.tag === 'todo',
               'text-done': formData.tag === 'done',
               'text-under-review': formData.tag === 'underReview',
@@ -130,7 +131,7 @@ import { useTodoListStore } from '@/stores/todoList'
         <svg
           @click="onClosePopOver"
           xmlns="http://www.w3.org/2000/svg"
-          class="w-5 h-5 mt-1 rotate-[44deg] cursor-pointer"
+          class="w-5 h-5 rotate-[44deg] cursor-pointer"
           viewBox="0 0 24 24"
           fill="none"
         >
@@ -143,16 +144,18 @@ import { useTodoListStore } from '@/stores/todoList'
           name="title"
           v-model="formData.title"
           placeholder="Title"
-          class="border-b-[1.9px] focus:border-page-blue focus:outline-none"
+          class="bg-transparent border-b-[1.9px] dark:border-green-400 dark:focus:border-green-400 focus:border-page-blue focus:outline-none"
         />
         <textarea
           name="details"
           v-model="formData.details"
           placeholder="Details"
           rows="2"
-          class="border-b-[1.9px] resize-none focus:border-page-blue focus:outline-none"
+          class="bg-transparent border-b-[1.9px] dark:border-green-400 dark:focus:border-green-400 resize-none focus:border-page-blue focus:outline-none"
         ></textarea>
-        <div class="border p-2 rounded-md border-dashed text-sm">
+        <div
+          class="border dark:border-green-400 p-2 rounded-md border-dashed text-sm text-second-text"
+        >
           <input
             v-on:change="onImageUpload"
             type="file"
@@ -195,6 +198,7 @@ const todoTodos = useTodoListStore().getTodos('todo')
 const underReviewTodos = useTodoListStore().getTodos('underReview')
 const doingTodos = useTodoListStore().getTodos('doing')
 const showPopOver = ref(false)
+const isDragging = ref(false)
 
 const formData = ref({
   title: '',
@@ -221,5 +225,19 @@ const onSubmit = () => {
   }
   useTodoListStore().createTodo(newTodo)
   onClosePopOver()
+}
+let idd = ''
+const onDrop = (event, status) => {
+  useTodoListStore().updateTodo(idd, null, null, null, null, status)
+  isDragging.value = true
+}
+
+const onDrag = (event, id) => {
+   isDragging.value = true
+   idd = id
+}
+
+const onDragEnd = () => {
+  isDragging.value = false
 }
 </script>

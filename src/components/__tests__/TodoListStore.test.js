@@ -1,53 +1,53 @@
-import { useTodoListStore } from "@/stores/todoList"
-import { createPinia, setActivePinia } from "pinia"
-import { beforeEach, describe, expect, test } from "vitest"
+import { useTodoListStore } from '@/stores/todoList'
+import { createPinia, setActivePinia } from 'pinia'
+import { beforeEach, describe, expect, test } from 'vitest'
 
 describe('TodoList Store', () => {
-    beforeEach(() => {
-        setActivePinia(createPinia())
-    })
+  beforeEach(() => {
+    setActivePinia(createPinia())
+  })
 
-    test('count starts at two', () => {
-        const listStore = useTodoListStore()
-        expect(listStore.count).toBe(2)
-    })
+  test('count starts at two', () => {
+    const listStore = useTodoListStore()
+    expect(listStore.count).toBe(2)
+  })
 
-    test('todo list starts with three items', () => {
-        const listStore = useTodoListStore()
-        expect(listStore.todoList.length).toBe(3)
-    })
+  test('todo list starts with three items', () => {
+    const listStore = useTodoListStore()
+    expect(listStore.todoList.length).toBe(3)
+  })
 
-    test('create todo item', () => {
-        const listStore = useTodoListStore()
-        
-        const dummyTodo = {
-            title: 'new',
-            details: 'Lorem ipsum, lorem ipsum',
-            date: new Date()
-        }
+  test('create todo item', () => {
+    const listStore = useTodoListStore()
 
-        const initialLength = listStore.todoList.length
+    const dummyTodo = {
+      title: 'new',
+      details: 'Lorem ipsum, lorem ipsum',
+      date: new Date()
+    }
 
-        listStore.createTodo(dummyTodo)
+    const initialLength = listStore.todoList.length
 
-        expect(listStore.todoList.length).toBe(initialLength + 1)
-    })
+    listStore.createTodo(dummyTodo)
 
-    test('fail to update todo item because there is no id provided', () => {
-        const listStore = useTodoListStore()
+    expect(listStore.todoList.length).toBe(initialLength + 1)
+  })
 
-        const res = listStore.updateTodo('Updated todo')
+  test('fail to update todo item because there is no id provided', () => {
+    const listStore = useTodoListStore()
 
-        expect(res).toBe(0)
-    })
+    const res = listStore.updateTodo('Updated todo')
 
-    test('delete todo item', () => {
-        const listStore = useTodoListStore()
+    expect(res).toBe(0)
+  })
 
-        const initialLength = listStore.todoList.length
+  test('delete todo item', () => {
+    const listStore = useTodoListStore()
 
-        listStore.deleteTodo(3)
+    const initialLength = listStore.todoList.length
 
-        expect(listStore.todoList.length).toBe(initialLength - 1)
-    })
+    listStore.deleteTodo(3)
+
+    expect(listStore.todoList.length).toBe(initialLength - 1)
+  })
 })

@@ -34,26 +34,26 @@ export const useTodoListStore = defineStore('todos', () => {
     }
   ])
 
-  const getTodos = (tag) => computed(()=>{
-    return todoList.value.filter((todo) => todo.tag === tag)
-  })
+  const getTodos = (tag) =>
+    computed(() => {
+      return todoList.value.filter((todo) => todo.tag === tag)
+    })
 
   function createTodo(newTodo) {
     newTodo.id = count.value++
     todoList.value.push(newTodo)
   }
 
-  function updateTodo(title, details, date, image, tag) {console.log(selectedId.value)
-    const index = todoList.value.findIndex((todo) => todo.id === selectedId.value)
-    if(index > -1) {
-        todoList.value[index].title = title || todoList.value[index].title
-        todoList.value[index].details = details || todoList.value[index].details
-        todoList.value[index].date = date || todoList.value[index].date
-        todoList.value[index].image = image || todoList.value[index].image
-        todoList.value[index].tag = tag || todoList.value[index].tag
-        
-        return 1
-    };
+  function updateTodo(id, title, details, date, image, tag) {
+    const index = todoList.value.findIndex((todo) => id ? todo.id === id : todo.id === selectedId.value)
+    if (index > -1) {
+      todoList.value[index].title = title || todoList.value[index].title
+      todoList.value[index].details = details || todoList.value[index].details
+      todoList.value[index].date = date || todoList.value[index].date
+      todoList.value[index].image = image || todoList.value[index].image
+      todoList.value[index].tag = tag || todoList.value[index].tag
+      return 1
+    }
     return 0
   }
 
@@ -71,5 +71,16 @@ export const useTodoListStore = defineStore('todos', () => {
     selectedId.value = id
   }
 
-  return { count, todoList, openEditModal, onCloseEditModal, onOpenEditModal, selectedId, getTodos, createTodo, updateTodo, deleteTodo }
+  return {
+    count,
+    todoList,
+    openEditModal,
+    onCloseEditModal,
+    onOpenEditModal,
+    selectedId,
+    getTodos,
+    createTodo,
+    updateTodo,
+    deleteTodo
+  }
 })

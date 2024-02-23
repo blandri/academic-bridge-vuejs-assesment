@@ -1,5 +1,5 @@
 <template>
-    <div
+  <div
     :class="{
       'absolute left-0 top-0 w-full h-full grid place-items-center bg-[rgba(13,12,34,.5)]': true,
       'ease-in-out duration-500': true,
@@ -8,42 +8,42 @@
   >
     <div
       :class="{
-        'bg-white rounded-[30px] p-8 w-[22%]': true,
+        'bg-white dark:bg-[rgba(13,12,34,.93)] rounded-[30px] p-8 w-[25%]': true,
         'ease-in-out duration-500': true,
         'scale-0': !todoListStore.openEditModal,
         'scale-1': todoListStore.openEditModal
       }"
     >
-      <div class="flex items-center text-center">
-        <h1 class="font-bold text-lg w-full">
-          Edit todo card
-        </h1>
+      <div class="flex items-center text-center dark:text-white">
+        <h1 class="font-bold text-lg w-full">Edit todo card</h1>
         <svg
           @click="onClose"
           xmlns="http://www.w3.org/2000/svg"
-          class="w-5 h-5 mt-1 rotate-[44deg] cursor-pointer"
+          class="w-5 h-5 rotate-[44deg] cursor-pointer"
           viewBox="0 0 24 24"
           fill="none"
         >
           <path d="M21 13H13V21H11V13H3V11H11V3H13V11H21V13Z" fill="currentColor" />
         </svg>
       </div>
-      <form @submit.prevent="onSubmit" action="" class="mt-8 grid gap-5">
+      <form @submit.prevent="onSubmit" action="" class="mt-8 grid gap-5 text-second-text">
         <input
           type="text"
           name="title"
           v-model="formData.title"
           placeholder="Title"
-          class="border-b-[1.9px] focus:border-page-blue focus:outline-none"
+          class="bg-transparent border-b-[1.9px] dark:border-green-400 dark:focus:border-green-400 focus:border-page-blue focus:outline-none"
         />
         <textarea
           name="details"
           v-model="formData.details"
           placeholder="Details"
           rows="2"
-          class="border-b-[1.9px] resize-none focus:border-page-blue focus:outline-none"
+          class="bg-transparent border-b-[1.9px] dark:border-green-400 dark:focus:border-green-400 resize-none focus:border-page-blue focus:outline-none"
         ></textarea>
-        <div class="border p-2 rounded-md border-dashed text-sm">
+        <div
+          class="border dark:border-green-400 p-2 rounded-md border-dashed text-sm text-second-text"
+        >
           <input
             v-on:change="onImageUpload"
             type="file"
@@ -81,7 +81,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from 'vue'
 import { useTodoListStore } from '../stores/todoList'
 
 const todoListStore = useTodoListStore()
@@ -92,12 +92,19 @@ const formData = ref({
 })
 
 function onClose() {
-    todoListStore.onCloseEditModal()
+  todoListStore.onCloseEditModal()
 }
 
 const onSubmit = () => {
   const date = `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`
-  useTodoListStore().updateTodo(formData.value.title, formData.value.details, date, formData.value.image, formData.value.tag)
+  useTodoListStore().updateTodo(
+    null,
+    formData.value.title,
+    formData.value.details,
+    date,
+    formData.value.image,
+    formData.value.tag
+  )
   onClose()
 }
 

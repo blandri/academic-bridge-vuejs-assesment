@@ -1,23 +1,27 @@
 <template>
-  <div id="card" class="bg-white rounded-[30px] p-5 grid cursor-pointer" draggable="true">
+  <div
+    id="card"
+    :class="{ 'bg-white dark:bg-side-dark rounded-[30px] p-5 grid cursor-pointer': true, }"
+    draggable="true"
+  >
     <div class="h-fit">
       <slot name="image"></slot>
     </div>
 
     <div class="grid">
-      <div class="flex justify-between items-center font-bold">
+      <div class="flex justify-between items-center font-bold dark:text-white">
         <slot name="title"></slot>
-        <div class="text-second-text relative">
+        <div class="text-second-text dark:text-inherit relative">
           <div @click="() => onOpenMoreClick(index)"><MoreIcon /></div>
           <div
             :class="{
-              'bg-white absolute z-10 border p-1 font-normal text-sm text-black-hue rounded-lg right-2 top-[120%] ease-in-out': true,
+              'bg-white dark:bg-side-dark absolute z-10 border dark:border-title-text-dark p-1 font-normal text-sm text-black-hue dark:text-white rounded-lg right-2 top-[120%] ease-in-out': true,
               'invisible -translate-y-1': !openMore[index]
             }"
           >
             <div
               @click="onUpdateClick(props.id, index)"
-              class="flex gap-2 items-center px-2 py-1 cursor-pointer hover:bg-back-color rounded-lg"
+              class="flex gap-2 items-center px-2 py-1 cursor-pointer hover:bg-back-color dark:hover:bg-title-text-dark rounded-lg"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -40,7 +44,7 @@
             </div>
             <div
               @click="onDeleteClick(props.id, index)"
-              class="flex gap-2 items-center px-2 py-1 text-red-600 cursor-pointer hover:bg-back-color rounded-lg"
+              class="flex gap-2 items-center px-2 py-1 text-red-600 cursor-pointer hover:bg-back-color dark:hover:bg-title-text-dark rounded-lg"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -72,17 +76,17 @@
         <div>
           <div class="flex relative">
             <div
-              class="w-7 h-7 rounded-full overflow-hidden absolute right-10 border-2 border-white"
+              class="w-7 h-7 rounded-full overflow-hidden absolute right-10 border-2 border-white dark:border-side-dark"
             >
               <img alt="Profile picture" class="w-full h-full" src="@/assets/profile.jpg" />
             </div>
             <div
-              class="w-7 h-7 rounded-full overflow-hidden absolute right-6 border-2 border-white"
+              class="w-7 h-7 rounded-full overflow-hidden absolute right-6 border-2 border-white dark:border-side-dark"
             >
               <img alt="Profile picture" class="w-full h-full" src="@/assets/profile.jpg" />
             </div>
             <div
-              class="w-7 h-7 bg-back-color text-page-blue text-[10px] font-bold grid place-items-center rounded-full absolute right-2 border-2 border-white"
+              class="w-7 h-7 bg-back-color text-page-blue text-[10px] font-bold grid place-items-center rounded-full absolute right-2 border-2 border-white dark:border-side-dark"
             >
               +3
             </div>
@@ -106,12 +110,13 @@ function onOpenMoreClick(index) {
   openMore.value[index] = !openMore.value[index]
 }
 
-function onDeleteClick (id, index) {
+function onDeleteClick(id, index) {
   todoListStore.deleteTodo(id)
   openMore.value[index] = false
 }
 
-function onUpdateClick (id, index) {console.log(id)
+function onUpdateClick(id, index) {
+  console.log(id)
   todoListStore.onOpenEditModal(id)
   openMore.value[index] = false
 }
@@ -121,5 +126,5 @@ const props = defineProps({
     type: Number,
     required: true
   }
-})
+});
 </script>

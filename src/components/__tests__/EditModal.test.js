@@ -5,9 +5,9 @@ import EditModalVue from '../EditModal.vue'
 import { createPinia, setActivePinia } from 'pinia'
 
 describe('Todo card item', () => {
-    beforeEach(() => {
-        setActivePinia(createPinia())
-    })
+  beforeEach(() => {
+    setActivePinia(createPinia())
+  })
 
   it('renders properly', () => {
     const wrapper = mount(EditModalVue)
