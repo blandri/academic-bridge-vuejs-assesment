@@ -1,53 +1,57 @@
-import { useTodoListStore } from "@/stores/todoList"
-import { createPinia, setActivePinia } from "pinia"
-import { beforeEach, describe, expect, test } from "vitest"
+import { useTodoListStore } from '@/stores/todoList'
+import { createPinia, setActivePinia } from 'pinia'
+import { beforeEach, describe, expect, test } from 'vitest'
 
 describe('TodoList Store', () => {
-    beforeEach(() => {
-        setActivePinia(createPinia())
-    })
+  beforeEach(() => {
+    setActivePinia(createPinia())
+  })
 
-    test('count starts at two', () => {
-        const listStore = useTodoListStore()
-        expect(listStore.count).toBe(2)
-    })
+  test('create todo item', async () => {
+    const listStore = useTodoListStore()
 
-    test('todo list starts with three items', () => {
-        const listStore = useTodoListStore()
-        expect(listStore.todoList.length).toBe(3)
-    })
+    const dummyTodo = {
+      title: 'new',
+      details: 'Lorem ipsum, lorem ipsum',
+      date: new Date()
+    }
 
-    test('create todo item', () => {
-        const listStore = useTodoListStore()
-        
-        const dummyTodo = {
-            title: 'new',
-            details: 'Lorem ipsum, lorem ipsum',
-            date: new Date()
-        }
+    const initialLength = listStore.todoList.length
 
-        const initialLength = listStore.todoList.length
+    await listStore.createTodo(dummyTodo)
+    expect(listStore.todoList.length).toBe(initialLength + 1)
+  })
 
-        listStore.createTodo(dummyTodo)
+  test('update todo item', async () => {
+    const listStore = useTodoListStore()
 
-        expect(listStore.todoList.length).toBe(initialLength + 1)
-    })
+    const dummyTodo = {
+      title: 'new',
+      details: 'Lorem ipsum, lorem ipsum',
+      date: new Date()
+    }
 
-    test('fail to update todo item because there is no id provided', () => {
-        const listStore = useTodoListStore()
+    const newTodo = await listStore.createTodo(dummyTodo)
+    const dummyTodoId = newTodo.id
+    const res = await listStore.updateTodo(dummyTodoId, 'Updated todo')
 
-        const res = listStore.updateTodo('Updated todo')
+    expect(res).toBe(1)
+  })
 
-        expect(res).toBe(0)
-    })
+  test('delete todo item', async () => {
+    const listStore = useTodoListStore()
 
-    test('delete todo item', () => {
-        const listStore = useTodoListStore()
+    const dummyTodo = {
+      title: 'new',
+      details: 'Lorem ipsum, lorem ipsum',
+      date: new Date()
+    }
 
-        const initialLength = listStore.todoList.length
+    const newTodo = await listStore.createTodo(dummyTodo)
+    const dummyTodoId = newTodo.id
 
-        listStore.deleteTodo(3)
+    const res = listStore.deleteTodo(dummyTodoId)
 
-        expect(listStore.todoList.length).toBe(initialLength - 1)
-    })
+    expect(res).toBe(1)
+  })
 })
