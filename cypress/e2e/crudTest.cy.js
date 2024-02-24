@@ -21,6 +21,12 @@ describe('My First Test', () => {
 
   it('Updates a todo item', () => {
     cy.visit('/')
+
+    cy.contains('button', 'Doing').click()
+    cy.get('#title').type('Testing create cypress')
+    cy.get('#details').type('Details for testing')
+    cy.contains('button', 'Add').click()
+
     cy.get('#more-icon').click()
     cy.contains('p', 'Edit').click()
     cy.get('#title-e').type('Testing edit cypress')
@@ -31,6 +37,12 @@ describe('My First Test', () => {
 
   it('Deletes a todo item', () => {
     cy.visit('/')
+
+    cy.contains('button', 'Doing').click()
+    cy.get('#title').type('Testing create cypress')
+    cy.get('#details').type('Details for testing')
+    cy.contains('button', 'Add').click()
+
     cy.get('#more-icon').click()
     cy.contains('p', 'Delete').click()
   })

@@ -296,7 +296,7 @@ export const onTagClick = (tagName) => {
   formData.value.tag = tagName
 }
 
-const onClosePopOver = () => {
+export const onClosePopOver = () => {
   showPopOver.value = false
 }
 
@@ -309,8 +309,6 @@ const onSubmit = () => {
     date: `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`
   }
   todoStore.createTodo(newTodo)
-  
-  if(!todoStore.creating) onClosePopOver()
 }
 let idd = ''
 const onDrop = (event, status) => {
