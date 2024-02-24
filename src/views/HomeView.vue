@@ -55,7 +55,7 @@ import LogoPicture from '../assets/logo.jpg'
       </div>
       <div class="w-full pt-10">
         <div class="flex justify-between items-center">
-          <h1 class="text-3xl dark:text-title-text-dark">Board</h1>
+          <h1 class="text-3xl dark:text-title-text-dark">{{ $t('board') }}</h1>
           <div class="flex items-center gap-3">
             <DropDownItem :language="true" />
             <div
@@ -101,7 +101,7 @@ import LogoPicture from '../assets/logo.jpg'
               </div>
               <input
                 type="text"
-                placeholder="Search"
+                :placeholder="$t('search')"
                 class="placeholder:text-sm w-full pl-6 focus:outline-none bg-transparent"
               />
             </div>
@@ -139,7 +139,6 @@ import LogoPicture from '../assets/logo.jpg'
 </template>
 
 <script>
- 
 const activeTheme = ref(localStorage.getItem('theme'))
 
 function onThemeChange(theme) {

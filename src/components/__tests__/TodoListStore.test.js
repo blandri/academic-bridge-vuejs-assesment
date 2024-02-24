@@ -7,17 +7,7 @@ describe('TodoList Store', () => {
     setActivePinia(createPinia())
   })
 
-  test('count starts at two', () => {
-    const listStore = useTodoListStore()
-    expect(listStore.count).toBe(2)
-  })
-
-  test('todo list starts with three items', () => {
-    const listStore = useTodoListStore()
-    expect(listStore.todoList.length).toBe(3)
-  })
-
-  test('create todo item', () => {
+  test('create todo item', async () => {
     const listStore = useTodoListStore()
 
     const dummyTodo = {
@@ -28,26 +18,40 @@ describe('TodoList Store', () => {
 
     const initialLength = listStore.todoList.length
 
-    listStore.createTodo(dummyTodo)
-
+    await listStore.createTodo(dummyTodo)
     expect(listStore.todoList.length).toBe(initialLength + 1)
   })
 
-  test('fail to update todo item because there is no id provided', () => {
+  test('update todo item', async () => {
     const listStore = useTodoListStore()
 
-    const res = listStore.updateTodo('Updated todo')
+    const dummyTodo = {
+      title: 'new',
+      details: 'Lorem ipsum, lorem ipsum',
+      date: new Date()
+    }
 
-    expect(res).toBe(0)
+    const newTodo = await listStore.createTodo(dummyTodo)
+    const dummyTodoId = newTodo.id
+    const res = await listStore.updateTodo(dummyTodoId, 'Updated todo')
+
+    expect(res).toBe(1)
   })
 
-  test('delete todo item', () => {
+  test('delete todo item', async () => {
     const listStore = useTodoListStore()
 
-    const initialLength = listStore.todoList.length
+    const dummyTodo = {
+      title: 'new',
+      details: 'Lorem ipsum, lorem ipsum',
+      date: new Date()
+    }
 
-    listStore.deleteTodo(3)
+    const newTodo = await listStore.createTodo(dummyTodo)
+    const dummyTodoId = newTodo.id
 
-    expect(listStore.todoList.length).toBe(initialLength - 1)
+    const res = listStore.deleteTodo(dummyTodoId)
+
+    expect(res).toBe(1)
   })
 })

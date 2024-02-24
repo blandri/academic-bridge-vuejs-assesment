@@ -8,14 +8,14 @@
   >
     <div
       :class="{
-        'bg-white dark:bg-[rgba(13,12,34,.93)] rounded-[30px] p-8 w-[25%]': true,
+        'bg-white dark:bg-[rgba(13,12,34,.93)] rounded-[30px] p-8 w-[70%] md:w-[40%] lg:w-[25%]': true,
         'ease-in-out duration-500': true,
         'scale-0': !todoListStore.openEditModal,
         'scale-1': todoListStore.openEditModal
       }"
     >
-      <div class="flex items-center text-center dark:text-white">
-        <h1 class="font-bold text-lg w-full">Edit todo card</h1>
+      <div class="flex items-center text-center gap-3 dark:text-white">
+        <h1 class="font-bold text-lg w-full">{{ $t('edit') }} todo {{ $t('card') }}</h1>
         <svg
           @click="onClose"
           xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@
           name="title"
           id="title-e"
           v-model="formData.title"
-          placeholder="Title"
+          :placeholder="$t('title')"
           class="bg-transparent border-b-[1.9px] dark:border-green-400 dark:focus:border-green-400 focus:border-page-blue focus:outline-none"
         />
         <textarea
@@ -60,14 +60,18 @@
                 fill="currentColor"
               />
             </svg>
-            Upload Image
+            {{ $t('upload') }} Image
           </label>
         </div>
         <button
           type="submit"
           class="bg-page-blue text-white rounded-lg p-1 font-semibold mt-4 flex items-center justify-center gap-2"
         >
-          <svg
+          <div v-if="todoListStore.updating" class="h-6 w-6 animate-spin">
+            <LoadingIcon />
+          </div>
+          <div v-if="!todoListStore.updating" class="flex items-center gap-2">
+            <svg
             xmlns="http://www.w3.org/2000/svg"
             class="w-[17px] h-[17px] mt-[2px]"
             viewBox="0 0 24 24"
@@ -75,7 +79,8 @@
           >
             <path d="M21 13H13V21H11V13H3V11H11V3H13V11H21V13Z" fill="currentColor" />
           </svg>
-          Edit
+          {{ $t('edit') }}
+          </div>
         </button>
       </form>
     </div>
@@ -85,6 +90,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useTodoListStore } from '../stores/todoList'
+import LoadingIcon from './icons/iconLoading.vue';
 
 const todoListStore = useTodoListStore()
 const formData = ref({
@@ -107,7 +113,8 @@ const onSubmit = () => {
     formData.value.image,
     formData.value.tag
   )
-  onClose()
+  
+  if (!todoListStore.updating) onClose()
 }
 
 const onImageUpload = (e) => {

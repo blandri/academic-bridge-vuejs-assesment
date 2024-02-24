@@ -6,25 +6,25 @@
     >
       <div v-if="props.language">
         <div
-        v-if="selectedValue === 'en'"
-        :class="{ 'flex gap-2 items-center cursor-pointer rounded-2xl': true }"
-      >
-        <div class="h-5 w-5 rounded-full overflow-hidden">
-          <img class="w-full h-full" src="@/assets/english.webp" alt="" />
-        </div>
+          v-if="selectedValue === 'en'"
+          :class="{ 'flex gap-2 items-center cursor-pointer rounded-2xl': true }"
+        >
+          <div class="h-5 w-5 rounded-full overflow-hidden">
+            <img class="w-full h-full" src="@/assets/english.webp" alt="" />
+          </div>
 
-        {{ selectedValue }}
-      </div>
-      <div
-        v-if="selectedValue === 'fr'"
-        :class="{ 'flex gap-2 items-center cursor-pointer rounded-2xl': true }"
-      >
-        <div class="h-5 w-5 rounded-full overflow-hidden">
-          <img class="w-full h-full" src="@/assets/french.webp" alt="" />
+          English
         </div>
+        <div
+          v-if="selectedValue === 'fr'"
+          :class="{ 'flex gap-2 items-center cursor-pointer rounded-2xl': true }"
+        >
+          <div class="h-5 w-5 rounded-full overflow-hidden">
+            <img class="w-full h-full" src="@/assets/french.webp" alt="" />
+          </div>
 
-        {{ selectedValue }}
-      </div>
+          French
+        </div>
       </div>
       <div v-if="!props.language">Barone LLC.</div>
       <svg
@@ -87,12 +87,13 @@ import { ref } from 'vue'
 const expand = ref(false)
 
 const languageOptions = ref(['en', 'fr'])
-const selectedValue = ref('en')
+const selectedValue = ref(localStorage.getItem('lang'))
 
 function onlanguageChange(lang) {
   localStorage.setItem('lang', lang)
   selectedValue.value = localStorage.getItem('lang')
   expand.value = false
+  window.location.reload()
 }
 
 const props = defineProps({

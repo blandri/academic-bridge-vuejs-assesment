@@ -1,57 +1,58 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-import cover from '../assets/profile.jpg'
+// import cover from '../assets/profile.jpg'
+import { createTodos, updatesTodo } from '@/api/todos'
 
 export const useTodoListStore = defineStore('todos', () => {
-  const count = ref(2)
   const openEditModal = ref(false)
   const selectedId = ref(null)
+  const creating = ref(false)
+  const updating = ref(false)
 
-  const todoList = ref([
-    {
-      id: 0,
-      title: 'Workout',
-      details: 'Lorem ipsum Lorem ipsum, Lorem ipsum Lorem ipsum',
-      tag: 'todo',
-      image: '',
-      date: '03/01/24'
-    },
-    {
-      id: 1,
-      title: 'Workout',
-      details: 'Lorem ipsum Lorem ipsum, Lorem ipsum Lorem ipsum',
-      tag: 'done',
-      image: cover,
-      date: '03/01/24'
-    },
-    {
-      id: 2,
-      title: 'Workout',
-      details: 'Lorem ipsum Lorem ipsum, Lorem ipsum Lorem ipsum',
-      tag: 'underReview',
-      image: cover,
-      date: '03/01/24'
-    }
-  ])
+  const todoList = ref([])
+  let doneTodos = ref([])
+  let doingTodos = ref([])
+  let todoTodos = ref([])
+  let underReviewTodos = ref([])
 
-  const getTodos = (tag) =>
-    computed(() => {
-      return todoList.value.filter((todo) => todo.tag === tag)
-    })
-
-  function createTodo(newTodo) {
-    newTodo.id = count.value++
-    todoList.value.push(newTodo)
+  const getTodos = async () => {
+    const data = todoList.value
+    doneTodos.value = data.filter((todo) => todo.completed === 'done')
+    doingTodos.value = data.filter((todo) => todo.completed === 'doing')
+    todoTodos.value = data.filter((todo) => todo.completed === 'todo')
+    underReviewTodos.value = data.filter((todo) => todo.completed === 'underReview')
   }
 
-  function updateTodo(id, title, details, date, image, tag) {
-    const index = todoList.value.findIndex((todo) => id ? todo.id === id : todo.id === selectedId.value)
+  async function createTodo(newTodo) {
+    creating.value = true
+    const res = await createTodos(newTodo)
+    res.date = newTodo.date
+    res.details = newTodo.details
+    todoList.value.push(res)
+
+    getTodos()
+    creating.value = false
+
+    return res
+  }
+
+  async function updateTodo(id, todo, details, date, image, completed) {
+    updating.value = true
+    await updatesTodo(id ? id : selectedId.value, { todo, completed })
+
+    const index = todoList.value.findIndex((todo) =>
+      id ? todo.id === id : todo.id === selectedId.value
+    )
+
     if (index > -1) {
-      todoList.value[index].title = title || todoList.value[index].title
+      todoList.value[index].todo = todo || todoList.value[index].todo
       todoList.value[index].details = details || todoList.value[index].details
       todoList.value[index].date = date || todoList.value[index].date
       todoList.value[index].image = image || todoList.value[index].image
-      todoList.value[index].tag = tag || todoList.value[index].tag
+      todoList.value[index].completed = completed || todoList.value[index].completed
+
+      getTodos()
+      updating.value = false
       return 1
     }
     return 0
@@ -59,7 +60,14 @@ export const useTodoListStore = defineStore('todos', () => {
 
   function deleteTodo(id) {
     const index = todoList.value.findIndex((todo) => todo.id === id)
+    if(index > -1) {
+      
     todoList.value.splice(index, 1)
+
+    getTodos()
+    return 1
+    }
+    return 0
   }
 
   function onCloseEditModal() {
@@ -72,13 +80,18 @@ export const useTodoListStore = defineStore('todos', () => {
   }
 
   return {
-    count,
+    creating: computed(() => creating.value),
+    updating: computed(() => updating.value),
+    done: computed(() => doneTodos.value),
+    doing: computed(() => doingTodos.value),
+    underReview: computed(() => underReviewTodos.value),
+    todo: computed(() => todoTodos.value),
+    selectedId,
     todoList,
     openEditModal,
+    getTodos,
     onCloseEditModal,
     onOpenEditModal,
-    selectedId,
-    getTodos,
     createTodo,
     updateTodo,
     deleteTodo
