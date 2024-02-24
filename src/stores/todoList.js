@@ -2,7 +2,6 @@ import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 // import cover from '../assets/profile.jpg'
 import { createTodos, updatesTodo } from '@/api/todos'
-import { onClosePopOver } from '@/components/TodoSection.vue'
 
 export const useTodoListStore = defineStore('todos', () => {
   const openEditModal = ref(false)
@@ -31,9 +30,8 @@ export const useTodoListStore = defineStore('todos', () => {
     res.details = newTodo.details
     todoList.value.push(res)
 
-    creating.value = false
     getTodos()
-    onClosePopOver()
+    creating.value = false
 
     return res
   }
@@ -54,7 +52,7 @@ export const useTodoListStore = defineStore('todos', () => {
       todoList.value[index].completed = completed || todoList.value[index].completed
 
       getTodos()
-      onCloseEditModal()
+      updating.value = false
       return 1
     }
     return 0

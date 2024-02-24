@@ -105,7 +105,7 @@ function onClose() {
 
 const onSubmit = () => {
   const date = `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`
-  todoListStore.updateTodo(
+  useTodoListStore().updateTodo(
     null,
     formData.value.title,
     formData.value.details,
@@ -113,6 +113,8 @@ const onSubmit = () => {
     formData.value.image,
     formData.value.tag
   )
+  
+  if (!todoListStore.updating) onClose()
 }
 
 const onImageUpload = (e) => {
