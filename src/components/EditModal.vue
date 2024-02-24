@@ -113,8 +113,6 @@ const onSubmit = () => {
     formData.value.image,
     formData.value.tag
   )
-  
-  if (!todoListStore.updating) onClose()
 }
 
 const onImageUpload = (e) => {

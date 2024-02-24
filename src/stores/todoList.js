@@ -5,6 +5,7 @@ import { createTodos, updatesTodo } from '@/api/todos'
 
 export const useTodoListStore = defineStore('todos', () => {
   const openEditModal = ref(false)
+  const showPopOver = ref(false)
   const selectedId = ref(null)
   const creating = ref(false)
   const updating = ref(false)
@@ -32,7 +33,7 @@ export const useTodoListStore = defineStore('todos', () => {
 
     getTodos()
     creating.value = false
-
+    showPopOver.value = false
     return res
   }
 
@@ -53,6 +54,7 @@ export const useTodoListStore = defineStore('todos', () => {
 
       getTodos()
       updating.value = false
+      onCloseEditModal()
       return 1
     }
     return 0
@@ -89,6 +91,7 @@ export const useTodoListStore = defineStore('todos', () => {
     selectedId,
     todoList,
     openEditModal,
+    showPopOver,
     getTodos,
     onCloseEditModal,
     onOpenEditModal,

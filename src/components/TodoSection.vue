@@ -168,15 +168,15 @@ import { watchEffect } from 'vue'
     :class="{
       'absolute left-0 top-0 w-full h-full grid place-items-center bg-[rgba(13,12,34,.5)]': true,
       'ease-in-out duration-500': true,
-      invisible: !showPopOver
+      invisible: !todoStore.showPopOver
     }"
   >
     <div
       :class="{
         'bg-white dark:bg-[rgba(13,12,34,.93)] rounded-[30px] p-8 w-[70%] md:w-[40%] lg:w-[25%]': true,
         'ease-in-out duration-500': true,
-        'scale-0': !showPopOver,
-        'scale-1': showPopOver
+        'scale-0': !todoStore.showPopOver,
+        'scale-1': todoStore.showPopOver
       }"
     >
       <div class="flex items-center text-center gap-3 dark:text-white">
@@ -272,7 +272,7 @@ let doing = ref([])
 let todo = ref([])
 let underReview = ref([])
 
-const showPopOver = ref(false)
+
 const isDragging = ref(-1)
 const activeColumn = ref('')
 
@@ -292,12 +292,12 @@ const formData = ref({
 })
 
 export const onTagClick = (tagName) => {
-  showPopOver.value = true
+  todoStore.showPopOver = true
   formData.value.tag = tagName
 }
 
 const onClosePopOver = () => {
-  showPopOver.value = false
+  todoStore.showPopOver = false
 }
 
 const onSubmit = () => {
