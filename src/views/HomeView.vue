@@ -28,33 +28,33 @@ onMounted(() => {
   >
     <div class="h-full flex gap-3 md:gap-7 text-black-hue dark:text-normal-text-dark">
       <div
-        class="bg-white dark:bg-side-dark w-fit h-full rounded-[33px] p-3 md:p-4 flex flex-col justify-between"
+        class="bg-white dark:bg-side-dark w-fit h-full rounded-[30px] p-3 md:p-4 flex flex-col justify-between"
       >
         <div class="h-11 w-11 dark:rounded-full dark:h-[60px] dark:overflow-hidden">
           <img alt="Logo" class="w-full h-full" :src="LogoPicture" />
         </div>
         <div class="h-full mt-16 flex flex-col items-center gap-10">
-          <div class="h-10 w-10 rounded-full bg-page-blue text-white grid place-items-center">
+          <div class="h-10 w-10 rounded-full cursor-pointer bg-page-blue text-white grid place-items-center">
             <AppsIcon />
           </div>
-          <div class="text-second-text">
+          <div class="text-second-text cursor-pointer">
             <StatsIcon />
           </div>
-          <div class="text-second-text">
+          <div class="text-second-text cursor-pointer">
             <InboxIcon />
           </div>
-          <div class="text-second-text">
+          <div class="text-second-text cursor-pointer">
             <CalendarIcon />
           </div>
-          <div class="text-second-text">
+          <div class="text-second-text cursor-pointer">
             <SettingsIcon />
           </div>
         </div>
-        <div class="grid gap-7 place-items-center">
+        <div class="grid gap-7 place-items-center mb-3">
           <div class="rounded-full h-8 w-8 overflow-hidden">
             <img alt="Profile picture" class="w-full h-full" src="@/assets/profile.jpg" />
           </div>
-          <div class="text-second-text">
+          <div class="text-second-text cursor-pointer">
             <LogoutIcon />
           </div>
         </div>

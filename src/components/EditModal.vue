@@ -44,7 +44,7 @@
           class="bg-transparent border-b-[1.9px] dark:border-green-400 dark:focus:border-green-400 resize-none focus:border-page-blue focus:outline-none"
         ></textarea>
         <div
-          class="border dark:border-green-400 p-1 grid place-items-center h-24 rounded-md border-dashed text-sm text-second-text"
+          class="mt-3 border dark:border-green-400 p-1 grid place-items-center h-24 rounded-md border-dashed text-sm text-second-text"
         >
           <div v-if="formData.image" class="h-full w-full overflow-hidden grid place-items-center">
             <img :src="formData.image" alt="" class="h-full">
