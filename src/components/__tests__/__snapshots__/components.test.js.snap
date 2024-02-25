@@ -1,0 +1,9 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Components test > test drop down item 1`] = `"Barone LLC."`;
+
+exports[`Components test > test editing modal 1`] = `"Edit todo card Upload Image Edit"`;
+
+exports[`Components test > test status item 1`] = `"Edit todo card Upload Image Edit"`;
+
+exports[`TodoList Store > create todo item 1`] = `"Barone LLC."`;

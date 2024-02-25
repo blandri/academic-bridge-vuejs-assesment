@@ -10,7 +10,9 @@ export const useTodoListStore = defineStore('todos', () => {
   const creating = ref(false)
   const updating = ref(false)
 
-  const todoList = ref([])
+  localStorage.setItem('todos', localStorage.getItem('todos') || JSON.stringify([]))
+  const todoList = ref(JSON.parse(localStorage.getItem('todos')))
+  
   let doneTodos = ref([])
   let doingTodos = ref([])
   let todoTodos = ref([])
@@ -33,7 +35,7 @@ export const useTodoListStore = defineStore('todos', () => {
     res.image = newTodo.image
     res.id = idCount.value
     todoList.value.push(res)
-
+    localStorage.setItem('todos', JSON.stringify(todoList.value))
     getTodos()
     creating.value = false
     showPopOver.value = false
@@ -54,7 +56,7 @@ export const useTodoListStore = defineStore('todos', () => {
       todoList.value[index].date = date || todoList.value[index].date
       todoList.value[index].image = image || todoList.value[index].image
       todoList.value[index].completed = completed || todoList.value[index].completed
-
+      localStorage.setItem('todos', JSON.stringify(todoList.value))
       getTodos()
       updating.value = false
       onCloseEditModal()
@@ -68,7 +70,7 @@ export const useTodoListStore = defineStore('todos', () => {
     if(index > -1) {
       
     todoList.value.splice(index, 1)
-
+    localStorage.setItem('todos', JSON.stringify(todoList.value))
     getTodos()
     return 1
     }
