@@ -1,13 +1,13 @@
 <template>
   <div
     :class="{
-      'border-2 dark:border-title-text-dark border-dashed  rounded-[30px]': props.dragging === id
+      'border-2 dark:border-title-text-dark border-dashed rounded-[30px]': props.dragging === id
     }"
   >
     <div
       id="card"
       :class="{
-        'bg-white dark:bg-side-dark rounded-[30px] p-5 grid cursor-pointer': true,
+        'bg-white dark:bg-side-dark rounded-[30px] p-4 md:p-5 grid cursor-pointer': true,
         'opacity-15': props.dragging === id
       }"
       draggable="true"
@@ -17,8 +17,10 @@
       </div>
 
       <div class="grid">
-        <div class="flex justify-between items-center font-bold dark:text-white">
-          <slot name="title"></slot>
+        <div class="flex justify-between font-bold dark:text-white">
+          <div style="word-wrap: break-word;" class="max-w-[200px] line-clamp-2">
+            <slot name="title"></slot>
+          </div>
           <div class="text-second-text dark:text-inherit relative">
             <div id="more-icon" @click="() => onOpenMoreClick(index)"><MoreIcon /></div>
             <div
@@ -73,7 +75,7 @@
             </div>
           </div>
         </div>
-        <div class="mt-2 text-second-text text-xs font-semibold w-full truncate">
+        <div style="word-wrap: break-word;" class="mt-2 text-second-text text-xs font-semibold max-w-[200px]">
           <slot name="details"></slot>
         </div>
         <div class="flex justify-between mt-4 text-second-text">

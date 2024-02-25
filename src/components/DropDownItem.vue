@@ -2,7 +2,7 @@
   <div class="relative font-semibold">
     <div
       @click="expand = !expand"
-      class="cursor-pointer bg-white dark:bg-side-dark px-3 py-2 rounded-3xl flex gap-3 items-center"
+      class="cursor-pointer bg-white dark:bg-side-dark px-2 md:px-3 py-1 md:py-2 text-sm md:text-inherit rounded-3xl flex gap-2 md:gap-3 items-center"
     >
       <div v-if="props.language">
         <div
@@ -43,7 +43,7 @@
     <div
       v-if="props.language"
       :class="{
-        'absolute z-10 top-[120%] w-full bg-white px-1 py-2 rounded-3xl ease-in-out duration-300': true,
+        'absolute z-10 top-[120%] w-full bg-white dark:bg-side-dark px-1 py-2 rounded-3xl ease-in-out duration-300': true,
         'invisible -translate-y-2': !expand
       }"
     >
@@ -92,7 +92,6 @@ const selectedValue = ref(localStorage.getItem('lang'))
 function onlanguageChange(lang) {
   localStorage.setItem('lang', lang)
   selectedValue.value = localStorage.getItem('lang')
-  expand.value = false
   window.location.reload()
 }
 

@@ -8,13 +8,13 @@
   >
     <div
       :class="{
-        'bg-white dark:bg-[rgba(13,12,34,.93)] rounded-[30px] p-8 w-[70%] md:w-[40%] lg:w-[25%]': true,
+        'bg-white dark:bg-[rgba(13,12,34,.93)] rounded-[30px] p-8 w-[90%] md:w-[40%] xl:w-[25%]': true,
         'ease-in-out duration-500': true,
         'scale-0': !todoListStore.openEditModal,
         'scale-1': todoListStore.openEditModal
       }"
     >
-      <div class="flex items-center text-center gap-3 dark:text-white">
+      <div class="flex items-center text-center dark:text-white">
         <h1 class="font-bold text-lg w-full">{{ $t('edit') }} todo {{ $t('card') }}</h1>
         <svg
           @click="onClose"
