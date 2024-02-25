@@ -4,7 +4,7 @@
       @click="expand = !expand"
       class="cursor-pointer bg-white dark:bg-side-dark px-2 md:px-3 py-1 md:py-2 text-sm md:text-inherit rounded-3xl flex gap-2 md:gap-3 items-center"
     >
-      <div>
+      <div v-if="props.language">
         <div
           v-if="selectedValue === 'en'"
           :class="{ 'flex gap-2 items-center cursor-pointer rounded-2xl': true }"

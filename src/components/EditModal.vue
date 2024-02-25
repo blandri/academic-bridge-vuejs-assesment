@@ -132,5 +132,6 @@ const onImageUpload = (event) => {
   if (event.files.length) {
       formData.value.image = URL.createObjectURL(event.files[0]);
   }
+  console.log(formData.value.image)
 }
 </script>
