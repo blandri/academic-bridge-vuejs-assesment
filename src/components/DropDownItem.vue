@@ -4,7 +4,7 @@
       @click="expand = !expand"
       class="cursor-pointer bg-white dark:bg-side-dark px-2 md:px-3 py-1 md:py-2 text-sm md:text-inherit rounded-3xl flex gap-2 md:gap-3 items-center"
     >
-      <div v-if="props.language">
+      <div>
         <div
           v-if="selectedValue === 'en'"
           :class="{ 'flex gap-2 items-center cursor-pointer rounded-2xl': true }"
@@ -87,7 +87,7 @@ import { ref } from 'vue'
 const expand = ref(false)
 
 const languageOptions = ref(['en', 'fr'])
-const selectedValue = ref(localStorage.getItem('lang'))
+const selectedValue = ref(localStorage.getItem('lang') || 'en')
 
 function onlanguageChange(lang) {
   localStorage.setItem('lang', lang)
