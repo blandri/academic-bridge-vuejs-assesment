@@ -73,7 +73,7 @@
             </div>
           </div>
         </div>
-        <div class="mt-2 text-second-text text-xs font-semibold">
+        <div class="mt-2 text-second-text text-xs font-semibold w-full truncate">
           <slot name="details"></slot>
         </div>
         <div class="flex justify-between mt-4 text-second-text">
@@ -125,7 +125,6 @@ function onDeleteClick(id, index) {
 }
 
 function onUpdateClick(id, index) {
-  console.log(id)
   todoListStore.onOpenEditModal(id)
   openMore.value[index] = false
 }
@@ -138,5 +137,5 @@ const props = defineProps({
   dragging: {
     type: Number
   }
-})
+});console.log('--<', props.id)
 </script>

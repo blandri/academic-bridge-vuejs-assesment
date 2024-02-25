@@ -44,10 +44,14 @@
           class="bg-transparent border-b-[1.9px] dark:border-green-400 dark:focus:border-green-400 resize-none focus:border-page-blue focus:outline-none"
         ></textarea>
         <div
-          class="border dark:border-green-400 p-2 rounded-md border-dashed text-sm text-second-text"
+          class="border dark:border-green-400 p-1 grid place-items-center h-24 rounded-md border-dashed text-sm text-second-text"
         >
-          <input
-            v-on:change="onImageUpload"
+          <div v-if="formData.image" class="h-full w-full overflow-hidden grid place-items-center">
+            <img :src="formData.image" alt="" class="h-full">
+          </div>
+          <div v-if="!formData.image">
+            <input
+            v-on:change="onImageUpload($event.target)"
             type="file"
             accept=".png, .jpg"
             className="invisible absolute"
@@ -62,10 +66,11 @@
             </svg>
             {{ $t('upload') }} Image
           </label>
+          </div>
         </div>
         <button
           type="submit"
-          class="bg-page-blue text-white rounded-lg p-1 font-semibold mt-4 flex items-center justify-center gap-2"
+          class="bg-page-blue disabled:bg-second-text dark:disabled:bg-side-dark dark:disabled:text-normal-text-dark disabled:cursor-not-allowed text-white rounded-lg p-1 font-semibold mt-4 flex items-center justify-center gap-2"
         >
           <div v-if="todoListStore.updating" class="h-6 w-6 animate-spin">
             <LoadingIcon />
@@ -93,10 +98,11 @@ import { useTodoListStore } from '../stores/todoList'
 import LoadingIcon from './icons/iconLoading.vue';
 
 const todoListStore = useTodoListStore()
-const formData = ref({
+let formData = ref({
   title: '',
   details: '',
-  tag: ''
+  tag: '',
+  image: ''
 })
 
 function onClose() {
@@ -113,9 +119,18 @@ const onSubmit = () => {
     formData.value.image,
     formData.value.tag
   )
+
+  formData.value = {
+    title: '',
+    details: '',
+    tag: '',
+    image: ''
+  }
 }
 
-const onImageUpload = (e) => {
-  console.log(e.target.value)
+const onImageUpload = (event) => {
+  if (event.files.length) {
+      formData.value.image = URL.createObjectURL(event.files[0]);
+  }
 }
 </script>

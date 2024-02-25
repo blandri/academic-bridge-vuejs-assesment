@@ -11,6 +11,12 @@ import DropDownItem from '../components/DropDownItem.vue'
 import EditModal from '@/components/EditModal.vue'
 import { ref, onMounted } from 'vue'
 import LogoPicture from '../assets/logo.jpg'
+
+onMounted(() => {
+  localStorage.setItem('lang', localStorage.getItem('lang') || 'en')
+  localStorage.setItem('theme', localStorage.getItem('theme') || 'light')
+  activeTheme.value = localStorage.getItem('theme')
+})
 </script>
 
 <template>
@@ -53,7 +59,7 @@ import LogoPicture from '../assets/logo.jpg'
           </div>
         </div>
       </div>
-      <div class="w-full pt-10">
+      <div class="w-full pt-[22px]">
         <div class="flex justify-between items-center">
           <h1 class="text-3xl dark:text-title-text-dark">{{ $t('board') }}</h1>
           <div class="flex items-center gap-3">
@@ -145,11 +151,6 @@ function onThemeChange(theme) {
   localStorage.setItem('theme', theme)
   activeTheme.value = localStorage.getItem('theme')
 }
-
-onMounted(() => {
-  localStorage.setItem('theme', localStorage.getItem('theme') || 'en')
-  activeTheme.value = localStorage.getItem('theme')
-})
 
 export default {
   data() {
