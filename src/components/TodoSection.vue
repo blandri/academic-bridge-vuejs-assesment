@@ -8,7 +8,7 @@ import { watchEffect } from 'vue'
 </script>
 
 <template>
-  <div class="mt-8 h-[80%] overflow-auto pr-2">
+  <div class="mt-8 h-[80%] overflow-auto no-scrollbars pr-2">
     <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 h-full">
       <div
         @dragover.prevent
@@ -45,7 +45,7 @@ import { watchEffect } from 'vue'
         </TodoCardItem>
         <div
           v-if="activeColumn && activeColumn !== 'todo'"
-          class="border-2 border-[rgba(3,86,159,.5)] border-dashed rounded-[30px] h-32 w-full"
+          class="border-2 border-[rgba(3,86,159,.3)] border-dashed rounded-[30px] h-32 w-full"
         ></div>
       </div>
       <div
@@ -83,7 +83,7 @@ import { watchEffect } from 'vue'
         </TodoCardItem>
         <div
           v-if="activeColumn && activeColumn !== 'doing'"
-          class="border-2 border-[rgba(3,86,159,.5)] border-dashed rounded-[30px] h-32 w-full"
+          class="border-2 border-[rgba(3,86,159,.3)] border-dashed rounded-[30px] h-32 w-full"
         ></div>
       </div>
       <div
@@ -121,7 +121,7 @@ import { watchEffect } from 'vue'
         </TodoCardItem>
         <div
           v-if="activeColumn && activeColumn !== 'underReview'"
-          class="border-2 border-[rgba(3,86,159,.5)] border-dashed rounded-[30px] h-32 w-full"
+          class="border-2 border-[rgba(3,86,159,.3)] border-dashed rounded-[30px] h-32 w-full"
         ></div>
       </div>
       <div
@@ -159,7 +159,7 @@ import { watchEffect } from 'vue'
         </TodoCardItem>
         <div
           v-if="activeColumn && activeColumn !== 'done'"
-          class="border-2 border-[rgba(3,86,159,.5)] border-dashed rounded-[30px] h-32 w-full"
+          class="border-2 border-[rgba(3,86,159,.3)] border-dashed rounded-[30px] h-32 w-full"
         ></div>
       </div>
     </div>
@@ -173,7 +173,7 @@ import { watchEffect } from 'vue'
   >
     <div
       :class="{
-        'bg-white dark:bg-[rgba(13,12,34,.93)] rounded-[30px] p-8 w-[70%] md:w-[40%] lg:w-[25%]': true,
+        'bg-white dark:bg-[rgba(13,12,34,.93)] rounded-[30px] p-8 w-[90%] md:w-[40%] xl:w-[25%]': true,
         'ease-in-out duration-500': true,
         'scale-0': !todoStore.showPopOver,
         'scale-1': todoStore.showPopOver
@@ -222,10 +222,14 @@ import { watchEffect } from 'vue'
           class="bg-transparent border-b-[1.9px] dark:border-green-400 dark:focus:border-green-400 resize-none focus:border-page-blue focus:outline-none"
         ></textarea>
         <div
-          class="border dark:border-green-400 p-2 rounded-md border-dashed text-sm text-second-text"
+          class="mt-3 border dark:border-green-400 p-1 grid place-items-center h-24 rounded-md border-dashed text-sm text-second-text"
         >
-          <input
-            v-on:change="onImageUpload"
+          <div v-if="formData.image" class="h-full w-full overflow-hidden grid place-items-center">
+            <img :src="formData.image" alt="" class="h-full">
+          </div>
+          <div v-if="!formData.image">
+            <input
+            v-on:change="onImageUpload($event.target)"
             type="file"
             accept=".png, .jpg"
             className="invisible absolute"
@@ -240,23 +244,17 @@ import { watchEffect } from 'vue'
             </svg>
             {{ $t('upload') }} Image
           </label>
+          </div>
         </div>
         <button
           type="submit"
-          class="bg-page-blue text-white rounded-lg p-1 font-semibold mt-4 flex items-center justify-center gap-2"
+          :disabled="!formData.title || !formData.details"
+          class="bg-page-blue disabled:bg-second-text dark:disabled:bg-side-dark dark:disabled:text-normal-text-dark disabled:cursor-not-allowed text-white rounded-lg p-1 font-semibold mt-4 flex items-center justify-center gap-2"
         >
           <div v-if="todoStore.creating" class="h-6 w-6 animate-spin">
             <LoadingIcon />
           </div>
           <div v-if="!todoStore.creating" class="flex items-center gap-2">
-            <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-[17px] h-[17px]"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <path d="M21 13H13V21H11V13H3V11H11V3H13V11H21V13Z" fill="currentColor" />
-          </svg>
           {{ $t('add') }}
           </div>
         </button>
@@ -272,6 +270,7 @@ let doing = ref([])
 let todo = ref([])
 let underReview = ref([])
 
+let idd = ''
 
 const isDragging = ref(-1)
 const activeColumn = ref('')
@@ -285,10 +284,11 @@ watchEffect(() => {
   todo.value = todoStore.todo
 })
 
-const formData = ref({
+let formData = ref({
   title: '',
   details: '',
-  tag: ''
+  tag: '',
+  image: ''
 })
 
 export const onTagClick = (tagName) => {
@@ -305,14 +305,19 @@ const onSubmit = () => {
     todo: formData.value.title,
     details: formData.value.details,
     completed: formData.value.tag,
-    image: formData.value.image || '',
+    image: formData.value.image,
     date: `${new Date().getDate()}/${new Date().getMonth()}/${new Date().getFullYear()}`
   }
   todoStore.createTodo(newTodo)
-  
-  if(!todoStore.creating) onClosePopOver()
+
+  formData.value = {
+    title: '',
+    details: '',
+    tag: '',
+    image: ''
+  }
 }
-let idd = ''
+
 const onDrop = (event, status) => {
   todoStore.updateTodo(idd, null, null, null, null, status)
   isDragging.value = 0
@@ -327,5 +332,11 @@ const onDrag = (event, id, column) => {
 const onDragEnd = () => {
   isDragging.value = 0
   activeColumn.value = false
+}
+
+const onImageUpload = (event) => {
+  if (event.files.length) {
+      formData.value.image = URL.createObjectURL(event.files[0]);
+    }
 }
 </script>

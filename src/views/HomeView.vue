@@ -11,61 +11,67 @@ import DropDownItem from '../components/DropDownItem.vue'
 import EditModal from '@/components/EditModal.vue'
 import { ref, onMounted } from 'vue'
 import LogoPicture from '../assets/logo.jpg'
+
+onMounted(() => {
+  localStorage.setItem('lang', localStorage.getItem('lang') || 'en')
+  localStorage.setItem('theme', localStorage.getItem('theme') || 'light')
+  activeTheme.value = localStorage.getItem('theme')
+})
 </script>
 
 <template>
   <main
     :class="{
-      'bg-back-color dark:bg-back-color-dark h-screen px-5 lg:px-10 pt-10 pb-8 font-poppins ease-in-out': true,
+      'bg-back-color dark:bg-back-color-dark h-screen px-2 md:px-5 lg:px-10 pt-10 pb-8 font-poppins ease-in-out': true,
       dark: activeTheme === 'dark'
     }"
   >
-    <div class="h-full flex gap-6 text-black-hue dark:text-normal-text-dark">
+    <div class="h-full flex gap-3 md:gap-7 text-black-hue dark:text-normal-text-dark">
       <div
-        class="bg-white dark:bg-side-dark w-fit h-full rounded-[33px] p-5 flex flex-col justify-between"
+        class="bg-white dark:bg-side-dark w-fit h-full rounded-[30px] p-3 md:p-4 flex flex-col justify-between"
       >
         <div class="h-11 w-11 dark:rounded-full dark:h-[60px] dark:overflow-hidden">
           <img alt="Logo" class="w-full h-full" :src="LogoPicture" />
         </div>
         <div class="h-full mt-16 flex flex-col items-center gap-10">
-          <div class="h-10 w-10 rounded-full bg-page-blue text-white grid place-items-center">
+          <div class="h-10 w-10 rounded-full cursor-pointer bg-page-blue text-white grid place-items-center">
             <AppsIcon />
           </div>
-          <div class="text-second-text">
+          <div class="text-second-text cursor-pointer">
             <StatsIcon />
           </div>
-          <div class="text-second-text">
+          <div class="text-second-text cursor-pointer">
             <InboxIcon />
           </div>
-          <div class="text-second-text">
+          <div class="text-second-text cursor-pointer">
             <CalendarIcon />
           </div>
-          <div class="text-second-text">
+          <div class="text-second-text cursor-pointer">
             <SettingsIcon />
           </div>
         </div>
-        <div class="grid gap-7 place-items-center">
+        <div class="grid gap-7 place-items-center mb-3">
           <div class="rounded-full h-8 w-8 overflow-hidden">
             <img alt="Profile picture" class="w-full h-full" src="@/assets/profile.jpg" />
           </div>
-          <div class="text-second-text">
+          <div class="text-second-text cursor-pointer">
             <LogoutIcon />
           </div>
         </div>
       </div>
-      <div class="w-full pt-10">
+      <div class="w-full pt-4 md:pt-[19px]">
         <div class="flex justify-between items-center">
-          <h1 class="text-3xl dark:text-title-text-dark">{{ $t('board') }}</h1>
+          <h1 class="text-2xl md:text-3xl dark:text-title-text-dark">{{ $t('board') }}</h1>
           <div class="flex items-center gap-3">
             <DropDownItem :language="true" />
             <div
-              class="h-fit p-[7px] mr-3 text-second-text border border-second-text dark:border-normal-text-dark rounded-full cursor-pointer"
+              class="h-fit p-1 md:p-[7px] mr-3 text-second-text border border-second-text dark:border-normal-text-dark rounded-full cursor-pointer"
             >
               <svg
                 v-if="activeTheme === 'dark'"
                 @click="onThemeChange('light')"
                 xmlns="http://www.w3.org/2000/svg"
-                class="w-5 h-5"
+                class="w-4 md:w-5 h-4 md:h-5"
                 viewBox="0 0 256 256"
                 fill="none"
               >
@@ -91,8 +97,10 @@ import LogoPicture from '../assets/logo.jpg'
           </div>
         </div>
         <div class="mt-5 flex justify-between">
-          <DropDownItem />
-          <div class="flex gap-4 justify-end w-[60%] md:w-[50%] ease-in-out duration-300">
+          <div class="hidden md:block">
+            <DropDownItem />
+          </div>
+          <div class="flex gap-4 justify-end w-full sm:w-[60%] md:w-[50%] lg:w-[55%] ease-in-out duration-300">
             <div
               class="bg-white dark:bg-side-dark px-3 py-2 rounded-3xl flex items-center ease-in-out duration-300"
             >
@@ -145,11 +153,6 @@ function onThemeChange(theme) {
   localStorage.setItem('theme', theme)
   activeTheme.value = localStorage.getItem('theme')
 }
-
-onMounted(() => {
-  localStorage.setItem('theme', localStorage.getItem('theme') || 'en')
-  activeTheme.value = localStorage.getItem('theme')
-})
 
 export default {
   data() {

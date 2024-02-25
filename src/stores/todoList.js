@@ -1,9 +1,9 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
-// import cover from '../assets/profile.jpg'
 import { createTodos, updatesTodo } from '@/api/todos'
 
 export const useTodoListStore = defineStore('todos', () => {
+  const idCount = ref(151)
   const openEditModal = ref(false)
   const showPopOver = ref(false)
   const selectedId = ref(null)
@@ -25,10 +25,13 @@ export const useTodoListStore = defineStore('todos', () => {
   }
 
   async function createTodo(newTodo) {
+    idCount.value++
     creating.value = true
     const res = await createTodos(newTodo)
     res.date = newTodo.date
     res.details = newTodo.details
+    res.image = newTodo.image
+    res.id = idCount.value
     todoList.value.push(res)
 
     getTodos()

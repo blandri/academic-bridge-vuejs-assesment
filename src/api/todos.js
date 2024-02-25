@@ -44,14 +44,4 @@ async function updatesTodo(id, newData) {
   }
 }
 
-function deletesTodo(id) {
-  const response = fetch(`https://dummyjson.com/todos/${id}`, {
-    method: 'DELETE'
-  })
-    .then((res) => res.json())
-    .then((data) => data)
-
-  return response
-}
-
-export { deletesTodo, updatesTodo, createTodos, getAllTodos }
+export { updatesTodo, createTodos, getAllTodos }
