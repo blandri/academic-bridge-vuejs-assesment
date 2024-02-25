@@ -61,7 +61,7 @@ onMounted(() => {
       </div>
       <div class="w-full pt-4 md:pt-[19px]">
         <div class="flex justify-between items-center">
-          <h1 class="text-2xl md:text-3xl dark:text-title-text-dark">{{ $t('board') }}</h1>
+          <h1 class="text-2xl md:text-3xl dark:text-normal-text-dark">{{ $t('board') }}</h1>
           <div class="flex items-center gap-3">
             <DropDownItem :language="true" />
             <div
@@ -132,7 +132,7 @@ onMounted(() => {
                 <img alt="Profile picture" class="w-full h-full" src="@/assets/profile.jpg" />
               </div>
               <div
-                class="w-10 h-10 bg-page-blue text-white text-xs grid place-items-center rounded-full absolute right-2 border-2 border-back-color dark:border-back-color-dark"
+                class="w-10 h-10 bg-page-blue text-white text-xs font-semibold grid place-items-center rounded-full absolute right-2 border-2 border-back-color dark:border-back-color-dark"
               >
                 +3
               </div>

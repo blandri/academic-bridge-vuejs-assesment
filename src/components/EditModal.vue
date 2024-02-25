@@ -76,15 +76,7 @@
             <LoadingIcon />
           </div>
           <div v-if="!todoListStore.updating" class="flex items-center gap-2">
-            <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="w-[17px] h-[17px] mt-[2px]"
-            viewBox="0 0 24 24"
-            fill="none"
-          >
-            <path d="M21 13H13V21H11V13H3V11H11V3H13V11H21V13Z" fill="currentColor" />
-          </svg>
-          {{ $t('edit') }}
+            {{ $t('edit') }}
           </div>
         </button>
       </form>
