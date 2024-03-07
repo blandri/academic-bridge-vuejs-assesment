@@ -22,11 +22,11 @@ onMounted(() => {
 <template>
   <main
     :class="{
-      'bg-back-color dark:bg-back-color-dark h-screen px-2 md:px-5 lg:px-10 pt-10 pb-8 font-poppins ease-in-out': true,
+      'grid place-items-center bg-back-color dark:bg-back-color-dark h-screen font-poppins ease-in-out': true,
       dark: activeTheme === 'dark'
     }"
   >
-    <div class="h-full flex gap-3 md:gap-7 text-black-hue dark:text-normal-text-dark">
+    <div class="h-[80%] w-[90%] flex gap-3 md:gap-7 text-black-hue dark:text-normal-text-dark">
       <div
         class="bg-white dark:bg-side-dark w-fit h-full rounded-[30px] p-3 md:p-4 flex flex-col justify-between"
       >
