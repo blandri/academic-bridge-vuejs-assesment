@@ -88,13 +88,18 @@ export const useTodoListStore = defineStore('todos', () => {
     selectedId.value = id
   }
 
-  function searchTodo(keyWord) {
-    const match = todoList.value.filter(todo=> {
-      if (todo.todo.includes(keyWord) || todo.details.includes(keyWord)) return todo
-      else return 0
-    })
-    searchResults.value = match
-    getTodos(true)
+  function searchTodo(keyWord, reset) {
+    if(!reset) {
+      const match = todoList.value.filter(todo=> {
+        if (todo.todo.includes(keyWord) || todo.details.includes(keyWord)) return todo
+        else return 0
+      })
+      searchResults.value = match
+      getTodos(true)
+    } else {
+      getTodos()
+    }
+    
   }
 
   return {

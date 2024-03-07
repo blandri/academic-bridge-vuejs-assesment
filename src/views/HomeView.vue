@@ -161,6 +161,7 @@ function onThemeChange(theme) {
 
 function onSearch(text) {
   if(text) todoStore.searchTodo(text)
+  else todoStore.searchTodo(null, true)
 }
 
 export default {
