@@ -111,11 +111,12 @@
 <script setup>
 import MoreIcon from './icons/iconMore.vue'
 import CalendarIcon from './icons/iconCalendar.vue'
-import { ref } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
 import { useTodoListStore } from '@/stores/todoList'
 
 const todoListStore = useTodoListStore()
 const openMore = ref([])
+const isAvailable = ref(false)
 
 function onOpenMoreClick(index) {
   openMore.value[index] = !openMore.value[index]
@@ -139,5 +140,5 @@ const props = defineProps({
   dragging: {
     type: Number
   }
-});console.log('--<', props.id)
+});
 </script>

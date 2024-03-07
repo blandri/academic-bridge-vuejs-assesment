@@ -11,6 +11,7 @@ import DropDownItem from '../components/DropDownItem.vue'
 import EditModal from '@/components/EditModal.vue'
 import { ref, onMounted } from 'vue'
 import LogoPicture from '../assets/logo.jpg'
+import { useTodoListStore } from '@/stores/todoList'
 
 onMounted(() => {
   localStorage.setItem('lang', localStorage.getItem('lang') || 'en')
@@ -110,6 +111,8 @@ onMounted(() => {
               <input
                 type="text"
                 :placeholder="$t('search')"
+                v-model="searchText"
+                :onChange="onSearch(searchText)"
                 class="placeholder:text-sm w-full pl-6 focus:outline-none bg-transparent"
               />
             </div>
@@ -147,11 +150,17 @@ onMounted(() => {
 </template>
 
 <script>
+const todoStore = useTodoListStore()
 const activeTheme = ref(localStorage.getItem('theme'))
+const searchText = ref()
 
 function onThemeChange(theme) {
   localStorage.setItem('theme', theme)
   activeTheme.value = localStorage.getItem('theme')
+}
+
+function onSearch(text) {
+  if(text) todoStore.searchTodo(text)
 }
 
 export default {

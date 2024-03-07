@@ -10,6 +10,8 @@ export const useTodoListStore = defineStore('todos', () => {
   const creating = ref(false)
   const updating = ref(false)
 
+  const searchResults = ref([])
+
   localStorage.setItem('todos', localStorage.getItem('todos') || JSON.stringify([]))
   const todoList = ref(JSON.parse(localStorage.getItem('todos')))
   
@@ -18,8 +20,8 @@ export const useTodoListStore = defineStore('todos', () => {
   let todoTodos = ref([])
   let underReviewTodos = ref([])
 
-  const getTodos = async () => {
-    const data = todoList.value
+  const getTodos = async (search) => {
+    const data = !search && todoList.value || searchResults.value
     doneTodos.value = data.filter((todo) => todo.completed === 'done')
     doingTodos.value = data.filter((todo) => todo.completed === 'doing')
     todoTodos.value = data.filter((todo) => todo.completed === 'todo')
@@ -86,6 +88,15 @@ export const useTodoListStore = defineStore('todos', () => {
     selectedId.value = id
   }
 
+  function searchTodo(keyWord) {
+    const match = todoList.value.filter(todo=> {
+      if (todo.todo.includes(keyWord) || todo.details.includes(keyWord)) return todo
+      else return 0
+    })
+    searchResults.value = match
+    getTodos(true)
+  }
+
   return {
     creating: computed(() => creating.value),
     updating: computed(() => updating.value),
@@ -97,11 +108,13 @@ export const useTodoListStore = defineStore('todos', () => {
     todoList,
     openEditModal,
     showPopOver,
+    results: computed(() => searchResults),
     getTodos,
     onCloseEditModal,
     onOpenEditModal,
     createTodo,
     updateTodo,
-    deleteTodo
+    deleteTodo,
+    searchTodo,
   }
 })
