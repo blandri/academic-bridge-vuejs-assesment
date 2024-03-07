@@ -9,7 +9,7 @@ import { watchEffect } from 'vue'
 
 <template>
   <div class="mt-8 h-[80%] overflow-auto no-scrollbars pr-2">
-    <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 h-full">
+    <div class="grid xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 h-full">
       <div
         @dragover.prevent
         @dragenter.prevent
@@ -90,7 +90,7 @@ import { watchEffect } from 'vue'
         @dragover.prevent
         @dragenter.prevent
         @drop="onDrop($event, 'underReview')"
-        class="hidden md:flex flex-col gap-4"
+        class="hidden lg:flex flex-col gap-4"
       >
         <StatusItem tagName="underReview">
           <template #color>
@@ -128,7 +128,7 @@ import { watchEffect } from 'vue'
         @dragover.prevent
         @dragenter.prevent
         @drop="onDrop($event, 'done')"
-        class="hidden lg:flex flex-col gap-4"
+        class="hidden xl:flex flex-col gap-4"
       >
         <StatusItem tagName="done">
           <template #color>
